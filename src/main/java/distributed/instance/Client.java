@@ -1,4 +1,4 @@
-package configuration.client.lifecycle;
+package distributed.instance;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
@@ -7,23 +7,23 @@ import com.hazelcast.core.LifecycleEvent;
 import com.hazelcast.core.LifecycleListener;
 
 /**
- * Created by bijoy on 16/6/16.
+ * Created by bijoy on 17/6/16.
  */
-public class ClientInstance implements LifecycleListener{
+public class Client implements LifecycleListener {
     private static ClientConfig clientConfig ;
     private static HazelcastInstance hazelcastInstance ;
-    private static ClientInstance clientInstance ;
+    private static Client client ;
 
     static {
         clientConfig = clientConfig();
-        clientInstance = new ClientInstance();
+        client = new Client();
     }
 
-    public static HazelcastInstance instance(){
+    public static HazelcastInstance clientInstance(){
         while (hazelcastInstance == null || !hazelcastInstance.getLifecycleService().isRunning()){
             try{
                 hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-                hazelcastInstance.getLifecycleService().addLifecycleListener(clientInstance);
+                hazelcastInstance.getLifecycleService().addLifecycleListener(client);
             }catch (Exception ex){
                 System.out.println("Exception "+ex.getMessage());
             }
@@ -50,7 +50,7 @@ public class ClientInstance implements LifecycleListener{
     public void stateChanged(LifecycleEvent event) {
         System.out.println("Client -> "+event);
         if(event.getState().equals(LifecycleEvent.LifecycleState.SHUTDOWN)){
-            instance();
+            clientInstance();
         }
     }
 }
