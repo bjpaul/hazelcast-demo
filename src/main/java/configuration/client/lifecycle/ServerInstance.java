@@ -77,6 +77,6 @@ public class ServerInstance implements LifecycleListener{
         }
         System.out.println("\n}");
 
-        cluster.addMembershipListener(new configuration.cluster.CustomMembershipListner());
+        cluster.addMembershipListener(new CustomMembershipListner());
     }
 }
