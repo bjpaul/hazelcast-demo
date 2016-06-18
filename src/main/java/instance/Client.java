@@ -38,6 +38,7 @@ public class Client {
 
         private static ClientConfig clientConfig() {
             ClientConfig clientConfig = new ClientConfig();
+            clientConfig.setInstanceName("CLIENT : "+System.getProperty("user.name"));
             clientConfig.getGroupConfig()
                     .setName("intellimeet")
                     .setPassword("june");
@@ -53,7 +54,6 @@ public class Client {
 
         @Override
         public void stateChanged(LifecycleEvent event) {
-            System.out.println("Client -> " + event);
             if (event.getState().equals(LifecycleEvent.LifecycleState.SHUTDOWN)) {
                 clientInstance();
             }

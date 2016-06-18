@@ -1,4 +1,4 @@
-package distributed.objects.map;
+package distributed.objects.map.configure;
 
 import com.hazelcast.config.*;
 import com.hazelcast.core.HazelcastInstance;

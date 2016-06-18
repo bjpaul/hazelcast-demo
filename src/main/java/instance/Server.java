@@ -60,24 +60,38 @@ public class Server {
             joinConfig.getTcpIpConfig()
                     .setEnabled(true)
                     .addMember("localhost");
+            config.getMemberAttributeConfig()
+                    .setStringAttribute("user", System.getProperty("user.name"));
             return config;
         }
 
         private static void membersString(Cluster cluster){
             Set<Member> members = cluster.getMembers();
-            Member localMember = cluster.getLocalMember();
             Address address;
 
-            System.out.print("Members [" + members.size() + "] {");
+            System.out.println("Members [" + members.size() + "] {");
+            StringBuilder sb ;
             for (Member member : members) {
+                sb= new StringBuilder();
                 address = member.getAddress();
-                System.out.print("\n {"+member.getStringAttribute("user")+" -> Instance "+address.getPort() % 10+"} ");
-                System.out.print("[" + address.getHost() + "]:" + address.getPort());
-                if(localMember.getAddress().equals(address)) {
-                    System.out.print(" this");
+                sb.append("    [");
+                sb.append(member.getStringAttribute("user"));
+                sb.append(" -> Instance ");
+                sb.append(address.getPort() % 10);
+                sb.append("] [");
+                sb.append(address.getHost());
+                sb.append("]");
+                sb.append(":");
+                sb.append(address.getPort());
+                if (member.localMember()) {
+                    sb.append(" this");
                 }
+                if (member.isLiteMember()) {
+                    sb.append(" lite");
+                }
+                System.out.println(sb);
             }
-            System.out.println("\n}");
+            System.out.println("}");
 
             cluster.addMembershipListener(new CustomMembershipListner());
         }
