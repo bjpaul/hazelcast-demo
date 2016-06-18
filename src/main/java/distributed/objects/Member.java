@@ -1,32 +1,38 @@
-package distributed.objects.map;
+package distributed.objects;
 
 import com.hazelcast.config.*;
 import com.hazelcast.core.HazelcastInstance;
-import distributed.instance.Server;
+import instance.Server;
 
 /**
  * Created by bijoy on 17/6/16.
  */
-public class Cluster {
+public class Member {
 
-    static {
-        addMapConfig(Server.memberConfig());
+    public static HazelcastInstance getInstance() {
+        return MemberConfig.getInstance();
     }
 
-    private static HazelcastInstance memberInstance() {
-        return Server.memberInstance();
-    }
+    private static class MemberConfig {
+        private static HazelcastInstance getInstance() {
+            return Server.memberInstance();
+        }
 
-    private static void addMapConfig(Config config) {
-        MapConfig mapConfig = new MapConfig()
+        static {
+            System.out.println("hello");
+            addMapConfig(Server.memberConfig());
+        }
+
+        private static void addMapConfig(Config config) {
+            MapConfig mapConfig = new MapConfig()
                 /*Seting configuration for a specific or group of map*/
-                .setName("*MyMap")
+                    .setName("*MyMap")
                 /*Set backup copy -> performance decreases with the count */
-                .setBackupCount(0) // default 1
+                    .setBackupCount(0) // default 1
                 /* Backup asynchronously*/
-                .setAsyncBackupCount(1) // default 0
-                .setReadBackupData(true) // default false
-                .setInMemoryFormat(InMemoryFormat.BINARY) // data will be stored in serialized binary format (default)
+                    .setAsyncBackupCount(1) // default 0
+                    .setReadBackupData(true) // default false
+                    .setInMemoryFormat(InMemoryFormat.BINARY) // data will be stored in serialized binary format (default)
 //                .setInMemoryFormat(InMemoryFormat.OBJECT)
         /*data will be stored in deserialized form. This configuration is good for maps where entry processing
         and queries form the majority of all operations and the objects are complex, making the serialization cost
@@ -37,13 +43,13 @@ public class Cluster {
         may cause data inconsistency
         Hits to the keys in the backups are not relected as hits to the original keys, this has an impact on maximum-idle-second, time-to-live expiration
 */
-                .setTimeToLiveSeconds(60 * 5) // default 0, infinite
-                .setMaxIdleSeconds(60 * 5) // default 0, infinite
-                .setEvictionPolicy(EvictionPolicy.LRU) // default NONE
-                .setEvictionPercentage(25); // default 25
-        mapConfig.getMaxSizeConfig()
-                .setSize(5000) // no of entry per node
-                .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.PER_NODE);
+                    .setTimeToLiveSeconds(60 * 5) // default 0, infinite
+                    .setMaxIdleSeconds(60 * 5) // default 0, infinite
+                    .setEvictionPolicy(EvictionPolicy.LRU) // default NONE
+                    .setEvictionPercentage(25); // default 25
+            mapConfig.getMaxSizeConfig()
+                    .setSize(5000) // no of entry per node
+                    .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.PER_NODE);
                 /*.setSize(250) // no of entry per partition
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.PER_PARTITION);*/
                 /*.setSize(100) // in MB per map in each instance
@@ -54,6 +60,8 @@ public class Cluster {
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE);*/
                 /*.setSize(40) // in percentage per map in each instance
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_PERCENTAGE);*/
-        config.addMapConfig(mapConfig);
+            config.addMapConfig(mapConfig);
+        }
     }
+
 }

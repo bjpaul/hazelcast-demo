@@ -1,4 +1,4 @@
-package distributed.instance;
+package instance;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;

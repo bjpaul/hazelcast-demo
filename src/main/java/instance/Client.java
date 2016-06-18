@@ -1,4 +1,4 @@
-package distributed.instance;
+package instance;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
