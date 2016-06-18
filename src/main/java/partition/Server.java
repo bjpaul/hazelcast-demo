@@ -1,9 +1,9 @@
 package partition;
 
 import com.hazelcast.config.Config;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IAtomicLong;
+import com.hazelcast.core.*;
+import com.hazelcast.nio.Address;
+import configuration.cluster.*;
 
 import java.util.Set;
 
@@ -16,6 +16,7 @@ public class Server {
 //        Demo 3
 //        System.setProperty("hazelcast.partition.count","350");
         hazelcastInstance = Hazelcast.newHazelcastInstance();
+        membersString(hazelcastInstance.getCluster());
 
         /*Config config = new Config();
         config.setProperty("hazelcast.partition.count","350");*/
@@ -29,5 +30,24 @@ public class Server {
         IAtomicLong iAtomicLong = hazelcastInstance.getAtomicLong("uniqueId");
         strings.add("Instance " + iAtomicLong.incrementAndGet());
 
+    }
+
+    private static void membersString(Cluster cluster){
+        Set<Member> members = cluster.getMembers();
+        Member localMember = cluster.getLocalMember();
+        Address address;
+
+        System.out.print("Members [" + members.size() + "] {");
+        for (Member member : members) {
+            address = member.getAddress();
+            System.out.print("\n {"+member.getStringAttribute("user")+" -> Instance "+address.getPort() % 10+"} ");
+            System.out.print("[" + address.getHost() + "]:" + address.getPort());
+            if(localMember.getAddress().equals(address)) {
+                System.out.print(" this");
+            }
+        }
+        System.out.println("\n}");
+
+        cluster.addMembershipListener(new configuration.cluster.CustomMembershipListner());
     }
 }
