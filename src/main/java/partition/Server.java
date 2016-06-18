@@ -15,10 +15,12 @@ public class Server {
     public static void main(String[] args){
 //        Demo 3
 //        System.setProperty("hazelcast.partition.count","350");
-        hazelcastInstance = Hazelcast.newHazelcastInstance();
+        Config config = new Config();
+        config.getMemberAttributeConfig().setStringAttribute("user", System.getProperty("user.name"));
+        hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         membersString(hazelcastInstance.getCluster());
 
-        /*Config config = new Config();
+        /*
         config.setProperty("hazelcast.partition.count","350");*/
 //        hazelcastInstance = Hazelcast.newHazelcastInstance(config);
 

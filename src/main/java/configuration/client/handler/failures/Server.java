@@ -25,6 +25,7 @@ public class Server {
         joinConfig.getTcpIpConfig()
                 .setEnabled(true)
                 .addMember("localhost");
+        config.getMemberAttributeConfig().setStringAttribute("user", System.getProperty("user.name"));
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         membersString(hazelcastInstance.getCluster());
         Set<String> strings = hazelcastInstance.getSet("mySet");

@@ -51,6 +51,7 @@ public class ServerInstance implements LifecycleListener{
         joinConfig.getTcpIpConfig()
                 .setEnabled(true)
                 .addMember("localhost");
+        config.getMemberAttributeConfig().setStringAttribute("user", System.getProperty("user.name"));
         return config;
     }
 
