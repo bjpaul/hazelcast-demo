@@ -9,48 +9,54 @@ import com.hazelcast.core.LifecycleListener;
 /**
  * Created by bijoy on 17/6/16.
  */
-public class Client implements LifecycleListener {
-    private static ClientConfig clientConfig ;
-    private static HazelcastInstance hazelcastInstance ;
-    private static Client client ;
-
-    static {
-        clientConfig = clientConfig();
-        client = new Client();
+public class Client {
+    public static HazelcastInstance instance() {
+        return ClientInstance.clientInstance();
     }
 
-    public static HazelcastInstance clientInstance(){
-        while (hazelcastInstance == null || !hazelcastInstance.getLifecycleService().isRunning()){
-            try{
-                hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-                hazelcastInstance.getLifecycleService().addLifecycleListener(client);
-            }catch (Exception ex){
-                System.out.println("Exception "+ex.getMessage());
-            }
+    private static class ClientInstance implements LifecycleListener {
+        private static ClientConfig clientConfig;
+        private static HazelcastInstance hazelcastInstance;
+        private static ClientInstance client;
+
+        static {
+            clientConfig = clientConfig();
+            client = new ClientInstance();
         }
-        return hazelcastInstance;
-    }
 
-    private static ClientConfig clientConfig(){
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.getGroupConfig()
-                .setName("intellimeet")
-                .setPassword("june");
-        clientConfig.getNetworkConfig()
-                .addAddress("localhost")
-                .setConnectionAttemptLimit(5) // by default 2
-                .setConnectionAttemptPeriod(1000) // by default 3000 ms
-                .setConnectionTimeout(3000) // by default 5000 ms
-                .setSmartRouting(true) // by default true
-                .setRedoOperation(true); // by default true for read only operation
-        return clientConfig;
-    }
+        public static HazelcastInstance clientInstance() {
+            while (hazelcastInstance == null || !hazelcastInstance.getLifecycleService().isRunning()) {
+                try {
+                    hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
+                    hazelcastInstance.getLifecycleService().addLifecycleListener(client);
+                } catch (Exception ex) {
+                    System.out.println("Exception " + ex.getMessage());
+                }
+            }
+            return hazelcastInstance;
+        }
 
-    @Override
-    public void stateChanged(LifecycleEvent event) {
-        System.out.println("Client -> "+event);
-        if(event.getState().equals(LifecycleEvent.LifecycleState.SHUTDOWN)){
-            clientInstance();
+        private static ClientConfig clientConfig() {
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.getGroupConfig()
+                    .setName("intellimeet")
+                    .setPassword("june");
+            clientConfig.getNetworkConfig()
+                    .addAddress("localhost")
+                    .setConnectionAttemptLimit(5) // by default 2
+                    .setConnectionAttemptPeriod(1000) // by default 3000 ms
+                    .setConnectionTimeout(3000) // by default 5000 ms
+                    .setSmartRouting(true) // by default true
+                    .setRedoOperation(true); // by default true for read only operation
+            return clientConfig;
+        }
+
+        @Override
+        public void stateChanged(LifecycleEvent event) {
+            System.out.println("Client -> " + event);
+            if (event.getState().equals(LifecycleEvent.LifecycleState.SHUTDOWN)) {
+                clientInstance();
+            }
         }
     }
 }

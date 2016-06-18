@@ -1,4 +1,4 @@
-package distributed.objects;
+package distributed.objects.map;
 
 import com.hazelcast.config.*;
 import com.hazelcast.core.HazelcastInstance;
@@ -13,13 +13,15 @@ public class Member {
         return MemberConfig.getInstance();
     }
 
+
+
+
     private static class MemberConfig {
         private static HazelcastInstance getInstance() {
             return Server.memberInstance();
         }
 
         static {
-            System.out.println("hello");
             addMapConfig(Server.memberConfig());
         }
 
