@@ -1,4 +1,4 @@
-package distributed.objects.map.basic;
+package distributed.objects.map.demo.basic;
 
 import com.hazelcast.core.EntryView;
 import com.hazelcast.core.HazelcastInstance;

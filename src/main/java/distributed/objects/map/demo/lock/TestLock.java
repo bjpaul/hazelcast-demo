@@ -1,4 +1,4 @@
-package distributed.objects.map.lock;
+package distributed.objects.map.demo.lock;
 
 import com.hazelcast.core.IMap;
 import instance.Client;
