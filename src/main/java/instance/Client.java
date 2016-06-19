@@ -14,6 +14,10 @@ public class Client {
         return ClientInstance.clientInstance();
     }
 
+    public static ClientConfig config(){
+        return ClientInstance.clientConfig;
+    }
+
     private static class ClientInstance implements LifecycleListener {
         private static ClientConfig clientConfig;
         private static HazelcastInstance hazelcastInstance;

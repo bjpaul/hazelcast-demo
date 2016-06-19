@@ -1,9 +1,6 @@
-package distributed.objects.map;
+package distributed.objects.map.basic;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.core.Partition;
-import com.hazelcast.core.PartitionService;
+import com.hazelcast.core.*;
 import com.hazelcast.nio.Address;
 import instance.Client;
 
@@ -13,7 +10,7 @@ import java.util.Random;
 /**
  * Created by bijoy on 18/6/16.
  */
-public class TestClientMap {
+public class BasicFunctionality {
     public static void main(String[] args) {
         int j = new Random().nextInt(100);
         HazelcastInstance hazelcastInstance = Client.instance();

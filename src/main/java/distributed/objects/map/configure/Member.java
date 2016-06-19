@@ -14,8 +14,6 @@ public class Member {
     }
 
 
-
-
     private static class MemberConfig {
         private static HazelcastInstance getInstance() {
             return Server.memberInstance();
@@ -27,12 +25,13 @@ public class Member {
 
         private static void addMapConfig(Config config) {
             MapConfig mapConfig = new MapConfig()
+                    .setName("*MyMap");
                 /*Seting configuration for a specific or group of map*/
-                    .setName("*MyMap")
+
                 /*Set backup copy -> performance decreases with the count */
-                    .setBackupCount(0) // default 1
+                    mapConfig.setBackupCount(1) // default 1
                 /* Backup asynchronously*/
-                    .setAsyncBackupCount(1) // default 0
+                    .setAsyncBackupCount(0) // default 0
                     .setReadBackupData(true) // default false
                     .setInMemoryFormat(InMemoryFormat.BINARY) // data will be stored in serialized binary format (default)
 //                .setInMemoryFormat(InMemoryFormat.OBJECT)
@@ -43,7 +42,7 @@ public class Member {
         map.get() call read data from backup copy
         improve performance
         may cause data inconsistency
-        Hits to the keys in the backups are not relected as hits to the original keys, this has an impact on maximum-idle-second, time-to-live expiration
+        Hits to the keys in the backups are not related as hits to the original keys, this has an impact on maximum-idle-second, time-to-live expiration
 */
                     .setTimeToLiveSeconds(60 * 5) // default 0, infinite
                     .setMaxIdleSeconds(60 * 5) // default 0, infinite
@@ -62,6 +61,12 @@ public class Member {
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE);*/
                 /*.setSize(40) // in percentage per map in each instance
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_PERCENTAGE);*/
+            mapConfig.getMapIndexConfigs()
+                    .add(
+                            new MapIndexConfig()
+                                    .setAttribute("testField")
+                                    .setOrdered(true)
+                    );
             config.addMapConfig(mapConfig);
         }
     }
