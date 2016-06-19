@@ -1,7 +1,7 @@
-package distributed.objects.collection.queue;
+package distributed.objects.topic.basic;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IQueue;
+import com.hazelcast.core.ITopic;
 import com.hazelcast.core.IdGenerator;
 import instance.Client;
 
@@ -30,14 +30,14 @@ public class Producer {
     private static void publish() {
         HazelcastInstance hazelcastInstance = Client.instance();
         IdGenerator idGenerator = hazelcastInstance.getIdGenerator("idGenerator");
-        IQueue<String> queue = hazelcastInstance.getQueue("distributedQueue");
+        ITopic<String> topic = hazelcastInstance.getTopic("distributedTopic");
         String nextId;
         for (int i = 0; i < 10; i++) {
             try {
                 Thread.sleep(500);
                 nextId = System.getProperty("user.name") + " : " + Thread.currentThread().getName() + " -> " + idGenerator.newId();
                 System.out.println("publish :: " + nextId);
-                queue.put(nextId);
+                topic.publish(nextId);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
