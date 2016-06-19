@@ -1,12 +1,11 @@
-package distributed.objects.topic.basic;
+package distributed.objects.lock;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.ITopic;
-import com.hazelcast.core.IdGenerator;
+import com.hazelcast.core.*;
 import instance.Client;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by bijoy on 19/6/16.
@@ -30,16 +29,25 @@ public class Producer {
     private static void publish() {
         HazelcastInstance hazelcastInstance = Client.instance();
         IdGenerator idGenerator = hazelcastInstance.getIdGenerator("idGenerator");
-        ITopic<String> topic = hazelcastInstance.getTopic("distributedTopic");
+        IList<String> list = hazelcastInstance.getList("distributedList");
+        ILock lock = hazelcastInstance.getLock("distributedLock");
+        ICondition publisher = lock.newCondition("publisherCondition");
+        ICondition consumer = lock.newCondition("consumerCondition");
         String nextId;
         for (int i = 0; i < 10; i++) {
+            lock.lock();
             try {
-                Thread.sleep(500);
+                while (list.size() == 100 * 100){
+                    publisher.await();
+                }
                 nextId = System.getProperty("user.name") + " : " + Thread.currentThread().getName() + " -> " + idGenerator.newId();
                 System.out.println("publish :: " + nextId);
-                topic.publish(nextId);
+                list.add(nextId);
+                consumer.signal();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }finally {
+                lock.unlock();
             }
         }
     }
