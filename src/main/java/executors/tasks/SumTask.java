@@ -5,6 +5,7 @@ import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.core.IMap;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
@@ -12,19 +13,33 @@ import java.util.concurrent.Callable;
  */
 public class SumTask implements Callable<Integer>, Serializable, HazelcastInstanceAware {
 
+    final static long serialVersionUID = 1L;
     private transient HazelcastInstance hz;
+    private boolean readAll = false;
 
+    public SumTask(){}
+    public SumTask(boolean readAll){
+        this.readAll = readAll;
+    }
     public void setHazelcastInstance(HazelcastInstance hz) {
         this.hz = hz;
     }
 
     public Integer call() throws Exception {
         IMap<String, Integer> map = hz.getMap("testExecutorMap");
+
+        Set<String> keys;
+        if(readAll){
+            keys = map.keySet();
+        }else {
+            keys = map.localKeySet();
+        }
+
         int result = 0;
-        for (String key : map.localKeySet()) {
-            System.out.println(hz.getName()+" | Calculating for key: " + key);
+        for (String key : keys) {
             result += map.get(key);
         }
+        System.out.println(hz.getName()+" | Total : " + result);
         return result;
     }
 }
