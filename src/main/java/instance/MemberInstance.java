@@ -1,14 +1,8 @@
-package executors;
+package instance;
 
 import com.hazelcast.config.Config;
-import com.hazelcast.config.ExecutorConfig;
-import com.hazelcast.config.MapConfig;
-import com.hazelcast.config.MapStoreConfig;
+import com.hazelcast.config.InMemoryFormat;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IExecutorService;
-import instance.Server;
-
-import java.util.UUID;
 
 /**
  * Created by bijoy on 18/6/16.
@@ -18,13 +12,8 @@ public class MemberInstance {
 
     static {
         Config config = Server.memberConfig();
-        config.setInstanceName(UUID.randomUUID().toString());
-        config.addExecutorConfig(
-                new ExecutorConfig()
-                        .setName("testExecutor")
-                        .setPoolSize(5) // default 16
-                        .setStatisticsEnabled(true)
-        );
+        config.getMapConfig("testEntryProcessorMap")
+                .setInMemoryFormat(InMemoryFormat.OBJECT);
         hazelcastInstance = Server.memberInstance();
     }
 
@@ -35,4 +24,6 @@ public class MemberInstance {
     public static HazelcastInstance getHazelcastInstance() {
         return hazelcastInstance;
     }
+
+
 }
