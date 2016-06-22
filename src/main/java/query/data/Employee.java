@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by bijoy on 21/6/16.
  */
-public class Employee implements Serializable {
+public class Employee implements Comparable<Employee>,Serializable {
 
     final static long serialVersionUID = 1l;
     private int id;
@@ -74,5 +74,45 @@ public class Employee implements Serializable {
                 ", active=" + active +
                 ", salary=" + salary +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+
+        Employee employee = (Employee) o;
+
+        if (getId() != employee.getId()) return false;
+        if (getAge() != employee.getAge()) return false;
+        if (isActive() != employee.isActive()) return false;
+        if (Double.compare(employee.getSalary(), getSalary()) != 0) return false;
+        return getName().equals(employee.getName());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getId();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getAge();
+        result = 31 * result + (isActive() ? 1 : 0);
+        temp = Double.doubleToLongBits(getSalary());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        if(this.getId() == o.getId()){
+            return 0;
+        }else if(this.getId() > o.getId()){
+            return 1;
+        }else {
+            return -1;
+        }
     }
 }
