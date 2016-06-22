@@ -2,12 +2,13 @@ package query.dao;
 
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
+import query.data.Company;
 import query.data.Employee;
 
 /**
  * Created by bijoy on 21/6/16.
  */
-public class EmployeePredicate {
+public class TestPredicate {
 
     public static Predicate<Integer, Employee> activeAndAge(boolean isActive, int age){
         System.out.println("---------Predicate----------");
@@ -35,6 +36,16 @@ public class EmployeePredicate {
 
     public static Predicate<Integer, Employee> nameLike(String exp){
         System.out.println("---------Predicate----------");
-        return Predicates.like("name",exp);
+        return Predicates.like("name", exp);
+    }
+
+    public static Predicate<Integer, Company> companyName(String name){
+        System.out.println("---------Predicate----------");
+        return Predicates.equal("detail.name", name);
+    }
+
+    public static Predicate<Integer, Company> companyByFirstActiveEmployee(boolean isAlive){
+        System.out.println("---------Predicate----------");
+        return Predicates.equal("employees[0].active", isAlive);
     }
 }

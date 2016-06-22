@@ -1,4 +1,4 @@
-package query;
+package query.basicquery;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;

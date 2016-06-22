@@ -5,7 +5,7 @@ import com.hazelcast.query.SqlPredicate;
 /**
  * Created by bijoy on 21/6/16.
  */
-public class EmployeeSqlPredicate {
+public class TestSqlPredicate {
 
     public static SqlPredicate activeAndAge(boolean isActive, int age){
         System.out.println("---------SQL Predicate----------");
@@ -48,6 +48,20 @@ public class EmployeeSqlPredicate {
     public static SqlPredicate nameLike(String exp){
         System.out.println("---------SQL Predicate----------");
         String query = String.format("name Like '%s'",exp);
+        System.out.println(query);
+        return new SqlPredicate(query);
+    }
+
+    public static SqlPredicate companyName(String name){
+        System.out.println("---------SQL Predicate----------");
+        String query = String.format("detail.name = '%s'",name);
+        System.out.println(query);
+        return new SqlPredicate(query);
+    }
+
+    public static SqlPredicate companyByFirstActiveEmployee(boolean alive){
+        System.out.println("---------SQL Predicate----------");
+        String query = String.format("employees[0].active = %s",alive);
         System.out.println(query);
         return new SqlPredicate(query);
     }

@@ -4,12 +4,13 @@ import com.hazelcast.query.EntryObject;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.PredicateBuilder;
 import com.hazelcast.query.Predicates;
+import query.data.Company;
 import query.data.Employee;
 
 /**
  * Created by bijoy on 21/6/16.
  */
-public class EmployeePredicateBuilder {
+public class TestPredicateBuilder {
 
     public static Predicate<Integer, Employee> activeAndAge(boolean isActive, int age){
         System.out.println("---------Predicate Builder----------");
@@ -34,6 +35,18 @@ public class EmployeePredicateBuilder {
         System.out.println("---------Predicate Builder----------");
         EntryObject e = new PredicateBuilder().getEntryObject();
         return Predicates.not(e.get("age").in(ages));
+    }
+
+    public static Predicate<Integer, Company> companyName(String name){
+        System.out.println("---------Predicate Builder----------");
+        EntryObject e = new PredicateBuilder().getEntryObject();
+        return e.get("detail.name").equal(name);
+    }
+
+    public static Predicate<Integer, Company> companyByFirstActiveEmployee(boolean isAlive){
+        System.out.println("---------Predicate Builder----------");
+        EntryObject e = new PredicateBuilder().getEntryObject();
+        return e.get("employees[0].active").equal(isAlive);
     }
 
 }

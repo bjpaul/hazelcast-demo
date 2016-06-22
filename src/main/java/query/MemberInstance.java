@@ -14,6 +14,8 @@ public class MemberInstance {
 
     static {
         Config config = Server.memberConfig();
+        config.getExecutorConfig("hz:query")
+                .setPoolSize(100); // default 16
         config.getMapConfig("employeeQueryMap")
                 .addMapIndexConfig(
                         new MapIndexConfig()
@@ -24,6 +26,14 @@ public class MemberInstance {
                         new MapIndexConfig()
                                 .setAttribute("age")
                                 .setOrdered(true)
+                )
+                .setInMemoryFormat(InMemoryFormat.OBJECT);
+
+        config.getMapConfig("collectionQueryMap")
+                .addMapIndexConfig(
+                        new MapIndexConfig()
+                                .setAttribute("employees[0].name")
+                                .setOrdered(false)
                 )
                 .setInMemoryFormat(InMemoryFormat.OBJECT);
         hazelcastInstance = Server.memberInstance();

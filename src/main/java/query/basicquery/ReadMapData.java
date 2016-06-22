@@ -1,11 +1,11 @@
-package query;
+package query.basicquery;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import instance.Client;
-import query.dao.EmployeePredicate;
-import query.dao.EmployeePredicateBuilder;
-import query.dao.EmployeeSqlPredicate;
+import query.dao.TestPredicate;
+import query.dao.TestPredicateBuilder;
+import query.dao.TestSqlPredicate;
 import query.data.Employee;
 
 /**
@@ -16,8 +16,8 @@ public class ReadMapData {
         HazelcastInstance hazelcastInstance = Client.instance();
         IMap<Integer, Employee> map = hazelcastInstance.getMap("employeeQueryMap");
 
-        System.out.println(map.values(EmployeeSqlPredicate.activeAndAge(true, 30)));
-        System.out.println(map.values(EmployeePredicate.activeAndAge(true, 30)));
-        System.out.println(map.values(EmployeePredicateBuilder.activeAndAge(true, 30)));
+        System.out.println(map.values(TestSqlPredicate.activeAndAge(true, 30)));
+        System.out.println(map.values(TestPredicate.activeAndAge(true, 30)));
+        System.out.println(map.values(TestPredicateBuilder.activeAndAge(true, 30)));
     }
 }
