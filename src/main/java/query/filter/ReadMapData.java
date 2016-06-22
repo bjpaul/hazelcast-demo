@@ -13,16 +13,32 @@ import query.data.Employee;
  * Created by bijoy on 21/6/16.
  */
 public class ReadMapData {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         HazelcastInstance hazelcastInstance = Client.instance();
         IMap<Integer, Employee> map = hazelcastInstance.getMap("employeeQueryMap");
 
-        /*System.out.println(map.values(new PagingPredicate(TestSqlPredicate.activeAndAge(true, 30), 2)));
+        System.out.println(map.values(new PagingPredicate(TestSqlPredicate.activeAndAge(true, 30), 2)));
         System.out.println(map.values(new PagingPredicate(TestPredicate.activeAndAge(true, 30), 2)));
-        System.out.println(map.values(new PagingPredicate(TestPredicateBuilder.activeAndAge(true, 30), 2)));*/
+        System.out.println(map.values(new PagingPredicate(TestPredicateBuilder.activeAndAge(true, 30), 2)));
 
-        System.out.println(map.values(new PagingPredicate(TestSqlPredicate.activeAndAge(true, 30),new EmployeeSalaryComparator(), 2)));
-        System.out.println(map.values(new PagingPredicate(TestPredicate.activeAndAge(true, 30),new EmployeeSalaryComparator(), 2)));
-        System.out.println(map.values(new PagingPredicate(TestPredicateBuilder.activeAndAge(true, 30),new EmployeeSalaryComparator(), 2)));
+        /*System.out.println(map.values(
+                new PagingPredicate(
+                        TestSqlPredicate.activeAndAge(true, 30),
+                        new EmployeeSalaryComparator(),
+                        2
+                )
+        ));
+        System.out.println(map.values(
+                new PagingPredicate(
+                        TestPredicate.activeAndAge(true, 30),
+                        new EmployeeSalaryComparator(),
+                        2)
+        ));
+        System.out.println(map.values(
+                new PagingPredicate(
+                        TestPredicateBuilder.activeAndAge(true, 30),
+                        new EmployeeSalaryComparator(),
+                        2)
+        ));*/
     }
 }
