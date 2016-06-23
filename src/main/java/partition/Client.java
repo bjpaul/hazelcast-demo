@@ -15,8 +15,8 @@ public class Client {
         for(Partition partition:hazelcastInstance.getPartitionService().getPartitions()){
             System.out.println("partition id : "+partition.getPartitionId()+", owner : "+partition.getOwner());
         }
-        System.out.println("*****************************************");
+        /*System.out.println("*****************************************");
         Partition partition = hazelcastInstance.getPartitionService().getPartition("Hello");
-        System.out.println("Partition ID for object Hello : "+partition.getPartitionId()+", Owner : "+partition.getOwner());
+        System.out.println("Partition ID for object Hello : "+partition.getPartitionId()+", Owner : "+partition.getOwner());*/
     }
 }
