@@ -32,7 +32,8 @@ public class ReadMapData {
                 new PagingPredicate(
                         TestPredicate.activeAndAge(true, 30),
                         new EmployeeSalaryComparator(),
-                        2)
+                        2
+                 )
         ));
         System.out.println(map.values(
                 new PagingPredicate(
