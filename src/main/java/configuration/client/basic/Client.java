@@ -19,10 +19,6 @@ public class Client {
                 /*.addAddress("localhost")
                 .addAddress("127.0.0.1")*/
                 .addAddress("localhost");
-        HazelcastInstance hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
-        Set<String> strings = hazelcastInstance.getSet("mySet");
-        for(String s:strings){
-            System.out.println(s);
-        }
+        HazelcastClient.newHazelcastClient(clientConfig);
     }
 }

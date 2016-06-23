@@ -15,7 +15,7 @@ public class Server {
                 .setName("intellimeet")
 //                .setName("intellimeet1")
                 .setPassword("june");
-        config.setLiteMember(true);
+//        config.setLiteMember(true);
         JoinConfig joinConfig = config.getNetworkConfig().getJoin();
         joinConfig.getMulticastConfig()
                 .setEnabled(false);
