@@ -15,7 +15,16 @@ public class Server {
 
         hazelcastInstance = Hazelcast.newHazelcastInstance();
 //        Demo 3
-//        hazelcastInstance.getCluster().addMembershipListener(new CustomMembershipListner());
+        /*Cluster cluster = hazelcastInstance.getCluster();
+        cluster.addMembershipListener(new CustomMembershipListner());
+        Set<Member> members = cluster.getMembers();
+        for (Member member : members){
+            Address address = member.getAddress();
+            System.out.println("Address"+address);
+            System.out.println("UUID "+member.getUuid());
+            System.out.println("Is lite member ??? "+member.isLiteMember());
+            System.out.println("Is local member ??? "+member.localMember());
+        }*/
 
 //        Demo 1
 //        hazelcastInstance.getPartitionService().addMigrationListener(CustomMigrationListner.getMigrationListener());
