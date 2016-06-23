@@ -5,7 +5,7 @@ import com.hazelcast.core.IMap;
 import instance.Client;
 import query.dao.TestPredicate;
 import query.dao.TestPredicateBuilder;
-import query.dao.TestSqlPredicate;
+import query.dao.TestSql;
 import query.data.Employee;
 
 /**
@@ -16,7 +16,7 @@ public class ReadMapData {
         HazelcastInstance hazelcastInstance = Client.instance();
         IMap<Integer, Employee> map = hazelcastInstance.getMap("employeeQueryMap");
 
-        System.out.println(map.values(TestSqlPredicate.activeAndAge(true, 30)));
+        System.out.println(map.values(TestSql.activeAndAge(true, 30)));
         System.out.println(map.values(TestPredicate.activeAndAge(true, 30)));
         System.out.println(map.values(TestPredicateBuilder.activeAndAge(true, 30)));
     }

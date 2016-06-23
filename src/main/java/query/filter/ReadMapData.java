@@ -6,7 +6,7 @@ import com.hazelcast.query.PagingPredicate;
 import instance.Client;
 import query.dao.TestPredicate;
 import query.dao.TestPredicateBuilder;
-import query.dao.TestSqlPredicate;
+import query.dao.TestSql;
 import query.data.Employee;
 
 /**
@@ -17,13 +17,13 @@ public class ReadMapData {
         HazelcastInstance hazelcastInstance = Client.instance();
         IMap<Integer, Employee> map = hazelcastInstance.getMap("employeeQueryMap");
 
-        System.out.println(map.values(new PagingPredicate(TestSqlPredicate.activeAndAge(true, 30), 2)));
+        System.out.println(map.values(new PagingPredicate(TestSql.activeAndAge(true, 30), 2)));
         System.out.println(map.values(new PagingPredicate(TestPredicate.activeAndAge(true, 30), 2)));
         System.out.println(map.values(new PagingPredicate(TestPredicateBuilder.activeAndAge(true, 30), 2)));
 
         /*System.out.println(map.values(
                 new PagingPredicate(
-                        TestSqlPredicate.activeAndAge(true, 30),
+                        TestSql.activeAndAge(true, 30),
                         new EmployeeSalaryComparator(),
                         2
                 )

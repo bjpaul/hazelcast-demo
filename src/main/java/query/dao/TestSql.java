@@ -5,7 +5,7 @@ import com.hazelcast.query.SqlPredicate;
 /**
  * Created by bijoy on 21/6/16.
  */
-public class TestSqlPredicate {
+public class TestSql {
 
     public static SqlPredicate activeAndAge(boolean isActive, int age){
         System.out.println("---------SQL Predicate----------");
