@@ -14,6 +14,15 @@ public class Server {
     public static void main(String[] args){
 
         hazelcastInstance = Hazelcast.newHazelcastInstance();
+//        Demo 1
+//        hazelcastInstance.getPartitionService().addMigrationListener(CustomMigrationListner.getMigrationListener());
+
+//        Demo 2
+//        Set<String> strings = hazelcastInstance.getSet("mySet");
+//        IAtomicLong iAtomicLong = hazelcastInstance.getAtomicLong("uniqueId");
+//        strings.add("Instance " + iAtomicLong.incrementAndGet());
+
+
 //        Demo 3
         /*Cluster cluster = hazelcastInstance.getCluster();
         cluster.addMembershipListener(new CustomMembershipListner());
@@ -25,15 +34,6 @@ public class Server {
             System.out.println("Is lite member ??? "+member.isLiteMember());
             System.out.println("Is local member ??? "+member.localMember());
         }*/
-
-//        Demo 1
-//        hazelcastInstance.getPartitionService().addMigrationListener(CustomMigrationListner.getMigrationListener());
-
-//        Demo 2
-//        Set<String> strings = hazelcastInstance.getSet("mySet");
-//        IAtomicLong iAtomicLong = hazelcastInstance.getAtomicLong("uniqueId");
-//        strings.add("Instance " + iAtomicLong.incrementAndGet());
-
 
 
         // Demo 4
