@@ -38,7 +38,7 @@ public class Producer {
                 Thread.sleep(500);
                 nextId = System.getProperty("user.name") + " : " + Thread.currentThread().getName() + " -> " + idGenerator.newId();
                 System.out.println("publish :: " + nextId);
-                ringbuffer.addAsync(nextId, OverflowPolicy.OVERWRITE);
+                ringbuffer.add(nextId);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
