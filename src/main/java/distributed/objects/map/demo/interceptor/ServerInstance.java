@@ -12,16 +12,16 @@ public class ServerInstance {
         map.addInterceptor(new CustomMapInterceptor());
 
         try{
-            System.out.println(map.put("1", "ONE"));
-            System.out.println(map.put("lock", "LOCK"));
-            System.out.println(map.put("1", 1));
+            map.put("1", "ONE");
+            map.put("lock", "LOCK");
+            map.put("1", 1);
         }catch (IllegalStateException ex){
             System.out.println(ex.getMessage());
         }
 
         System.out.println(map.get("1"));
         try {
-            System.out.println(map.remove("lock"));
+            map.remove("lock");
         }catch (IllegalStateException ex){
             System.out.println(ex.getMessage());
         }

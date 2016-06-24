@@ -18,6 +18,7 @@ public class CustomMapInterceptor implements MapInterceptor {
 
     @Override
     public Object interceptPut(Object oldValue, Object newValue) {
+        System.out.println("------------interceptPut "+newValue+" ---------------");
         if(!(newValue instanceof String)){
             throw new IllegalStateException("other than string type value can not be set");
         }
@@ -26,11 +27,12 @@ public class CustomMapInterceptor implements MapInterceptor {
 
     @Override
     public void afterPut(Object value) {
-        System.out.println("***********afterPut*********************");
+        System.out.println("***********afterPut "+value+"*********************");
     }
 
     @Override
     public Object interceptRemove(Object removedValue) {
+        System.out.println("------------interceptRemove "+removedValue+" ---------------");
         if(removedValue.equals("LOCK")){
             throw new IllegalStateException("LOCK values cannot be removed");
         }
@@ -39,6 +41,6 @@ public class CustomMapInterceptor implements MapInterceptor {
 
     @Override
     public void afterRemove(Object value) {
-        System.out.println("~~~~~~~~~~~~~~~~~~~afterRemove~~~~~~~~~~~~~~~");
+        System.out.println("~~~~~~~~~~~~~~~~~~~afterRemove "+value+"~~~~~~~~~~~~~~~");
     }
 }
