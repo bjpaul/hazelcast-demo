@@ -61,12 +61,6 @@ public class Member {
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE);*/
                 /*.setSize(40) // in percentage per map in each instance
                 .setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_PERCENTAGE);*/
-            mapConfig.getMapIndexConfigs()
-                    .add(
-                            new MapIndexConfig()
-                                    .setAttribute("testField")
-                                    .setOrdered(true)
-                    );
             config.addMapConfig(mapConfig);
         }
     }
