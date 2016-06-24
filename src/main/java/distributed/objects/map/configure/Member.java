@@ -33,17 +33,6 @@ public class Member {
                 /* Backup asynchronously*/
                     .setAsyncBackupCount(0) // default 0
                     .setReadBackupData(true) // default false
-                    .setInMemoryFormat(InMemoryFormat.BINARY) // data will be stored in serialized binary format (default)
-//                .setInMemoryFormat(InMemoryFormat.OBJECT)
-        /*data will be stored in deserialized form. This configuration is good for maps where entry processing
-        and queries form the majority of all operations and the objects are complex, making the serialization cost
-        respectively high*/
-/*
-        map.get() call read data from backup copy
-        improve performance
-        may cause data inconsistency
-        Hits to the keys in the backups are not related as hits to the original keys, this has an impact on maximum-idle-second, time-to-live expiration
-*/
                     .setTimeToLiveSeconds(60 * 5) // default 0, infinite
                     .setMaxIdleSeconds(60 * 5) // default 0, infinite
                     .setEvictionPolicy(EvictionPolicy.LRU) // default NONE
