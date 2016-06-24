@@ -25,8 +25,10 @@ public class Server {
 
 //        Demo 3
         /*Cluster cluster = hazelcastInstance.getCluster();
-        cluster.addMembershipListener(new CustomMembershipListner());
-        Set<Member> members = cluster.getMembers();
+        cluster.addMembershipListener(new CustomMembershipListner());*/
+
+//        Demo 4
+        /*Set<Member> members = cluster.getMembers();
         for (Member member : members){
             Address address = member.getAddress();
             System.out.println("Address"+address);
@@ -36,7 +38,7 @@ public class Server {
         }*/
 
 
-        // Demo 4
+        // Demo 5
         /*
         System.setProperty("hazelcast.partition.count","350");
         config.setProperty("hazelcast.partition.count","350");
