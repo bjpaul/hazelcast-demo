@@ -13,16 +13,7 @@ public class Server {
         Config config = new Config();
         config.getGroupConfig()
                 .setName("intellimeet")
-//                .setName("intellimeet1")
                 .setPassword("june");
-//        config.setLiteMember(true);
-        JoinConfig joinConfig = config.getNetworkConfig().getJoin();
-        joinConfig.getMulticastConfig()
-                .setEnabled(false);
-        joinConfig.getTcpIpConfig()
-                .setEnabled(true)
-//                .addMember("localhost.127.0.0.1")
-                .addMember("localhost");
         Hazelcast.newHazelcastInstance(config);
     }
 
